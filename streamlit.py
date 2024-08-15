@@ -21,9 +21,15 @@ if st.button("Generate Response"):
     try:
         completion = openai.ChatCompletion.create(
             deployment_id=deployment,
-            messages=[
-                {"role": "user", "content": user_input}
-            ],
+            messages= [
+                {
+                "role": "system",
+                "content": "You are an email retrieval system that interprets user queries about emails including time periods, senders, and date ranges and maps them to specific commands according to dataset. For example, given the input: Show me last 10 days mails, the system should produce the output: {show_mails_of_days} {10}."
+                },
+                {
+                "role": "user",
+                "content": user_input
+                }],
             max_tokens=800,
             temperature=0.7,
             top_p=0.95,
